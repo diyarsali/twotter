@@ -2,16 +2,15 @@
   <div class="user-profile">
     <div class="user-profile-wrapper">
       <div class="user-profile-user-panel">
-        <h1 class="user-profile-suername">@{{ state.user.username  }} </h1>
-        <div class="user-profile-admin-badge" v-if="state.user.isAdmin">Admin</div>
+        <h1 class="user-profile-suername">@{{ state.user.username }}</h1>
+        <div class="user-profile-admin-badge" v-if="state.user.isAdmin">
+          Admin
+        </div>
         <div class="suer-profile-follower-count">
-          <strong> Followers: </strong> {{ state.follower}}
+          <strong> Followers: </strong> {{ state.follower }}
         </div>
       </div>
-        <createTwootPanel 
-        :user="user" 
-        @addTwoot = "createTwootFromChild"
-        />
+      <createTwootPanel :user="state.user" @addTwoot="createTwootFromChild" />
     </div>
 
     <div class="user-profile-twoots-wrapper">
@@ -19,52 +18,45 @@
         v-for="twoot in state.user.twoots"
         :key="twoot.id"
         :username="state.user.username"
-        :twoot="twoot" 
+        :twoot="twoot"
       />
     </div>
   </div>
 </template>
 
 <script>
-import {reactive ,computed} from "vue";
-import {useRoute} from "vue-router"
+import { reactive, computed } from "vue";
+import { useRoute } from "vue-router";
 import TwootItem from "../components/TwootItem";
 import createTwootPanel from "../components/createTwootPanel.vue";
-import {users} from "../assets/users"
+import { users } from "../assets/users";
 
 export default {
   name: "UserProfile",
   components: { TwootItem, createTwootPanel },
-  setup (){
+  setup() {
     const route = useRoute();
-    const userId = computed(()=>
-    route.params.userId
-
-    ) 
-
+    const userId = computed(() => route.params.userId);
 
     const state = reactive({
-     isloading: false,
-     follower : userId.value,
-      user: users[userId.value -1] || users[0]
-    })
-    function createTwootFromChild(textField){
-        state.user.twoots.push({
-       id:state.user.length +1,
-       content : textField
-     })
+      isloading: false,
+      follower: userId.value,
+      user: users[userId.value - 1] || users[0],
+    });
+    function createTwootFromChild(textField) {
+      state.user.twoots.push({
+        id: state.user.length + 1,
+        content: textField,
+      });
     }
     return {
       state,
       createTwootFromChild,
-      userId 
-       
-    }
-  }
-
+      userId,
+    };
+  },
 };
 </script>
-
 
 <style lang="scss" scoped>
 .--exceed .new-twoot {
@@ -95,7 +87,6 @@ export default {
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
           0 6px 6px rgba(0, 0, 0, 0.23);
       }
-
     }
   }
 }
