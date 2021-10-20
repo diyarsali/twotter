@@ -24,6 +24,8 @@
   </div>
 </template>
 
+
+
 <script>
 import { reactive, computed } from "vue";
 import { useRoute } from "vue-router";
@@ -44,10 +46,8 @@ export default {
       user: users[userId.value - 1] || users[0],
     });
     function createTwootFromChild(textField) {
-      state.user.twoots.push({
-        id: state.user.length + 1,
-        content: textField,
-      });
+
+      state.user.twoots.unshift({ id: state.user.twoots.length + 1, content: textField });
     }
     return {
       state,

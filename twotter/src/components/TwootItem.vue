@@ -1,7 +1,7 @@
 <template>
   <div class="twoot-item">
-    <div class="twoot-profile-item" @click="favouriteTwoot(twoot.id)">
-      <div class="twoot-username">@{{ username }} {{ id }}</div>
+    <div class="twoot-profile-item">
+      <div class="twoot-username">@{{ username }} </div>
       <div class="twoot-content">{{ twoot.content }}</div>
     </div>
   </div>
@@ -19,16 +19,9 @@ export default {
       type: Object,
       required: true,
     },
-    id: {
-      type: Number,
-      required: false,
-    },
+    
   },
-  methods: {
-    favouriteTwoot(id) {
-      this.$emit("favourite", id);
-    },
-  },
+
 };
 </script>
 <style >
